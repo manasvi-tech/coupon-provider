@@ -10,7 +10,7 @@ const CouponClaim = () => {
   useEffect(() => {
     if (countdown > 0) {
       const timer = setInterval(() => {
-        setCountdown((prev) => prev - 1);
+        setCountdown((prev) => (prev > 0 ? prev - 1 : 0));
       }, 1000);
       return () => clearInterval(timer);
     }
@@ -27,9 +27,8 @@ const CouponClaim = () => {
         setMessage(null);
         setCongratsMessage(`🎉 Congratulations! You claimed Coupon: ${data.coupon}`);
         setTimeout(() => setCongratsMessage(null), 5000); // Remove after 5 sec
-      } else if (data.message.includes("Try again in")) {
-        const minutes = parseFloat(data.message.match(/([\d.]+) minutes/)[1]);
-        setCountdown(minutes * 60);
+      } else if (data.message === "Try again in") {
+        setCountdown(data.countdown); // ⏳ Start countdown timer from backend
         setMessage(null);
       } else {
         setMessage(data.message);
