@@ -41,6 +41,21 @@
       
 
     export const allCoupon = async (req, res) => {
-        const coupons = await Coupon.find({ isClaimed: false }).select("code");
-        res.json({ availableCoupons: coupons });
-    }
+        try {
+          console.log("🔍 Fetching coupons from MongoDB...");
+      
+          const coupons = await Coupon.find({ isClaimed: false }).select("code");
+          
+          if (coupons.length === 0) {
+            console.log("⚠️ No coupons found.");
+          } else {
+            console.log(`✅ Found ${coupons.length} coupons.`);
+          }
+      
+          res.json({ availableCoupons: coupons });
+        } catch (error) {
+          console.error("❌ Error fetching coupons:", error);
+          res.status(500).json({ message: "Server error fetching coupons." });
+        }
+      };
+      

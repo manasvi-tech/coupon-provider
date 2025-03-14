@@ -18,15 +18,24 @@ const LOCAL_IP = "192.168.1.16"
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(cors({ origin: "http://localhost:5173", credentials: true })); // Allows frontend requests on cookies
+app.use(cors({ 
+    origin: [
+      "http://localhost:5173",  // ✅ Allow local development
+      "http://192.168.1.16:3000" // ✅ Allow your local IP
+    ], 
+    credentials: true 
+  }));
+  
 
-app.use(express.static(path.join(__dirname,"/frontend/dist")))
+// ✅ Fix: API routes should be defined BEFORE serving frontend files
+app.use("/api/coupon", couponRoutes);  // ✅ API route comes first
 
-app.get("*", (req,res) =>{
-    res.sendFile(path.join(__dirname,"frontend" , "dist" , "index.html"))
-})
+// ✅ Serve React frontend *after* API routes
+app.use(express.static(path.join(__dirname, "/frontend/dist"))); 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
 
-app.use("/api/coupon",  couponRoutes);
 
 app.get("/test", (req, res) => {
     res.send("API is working!");

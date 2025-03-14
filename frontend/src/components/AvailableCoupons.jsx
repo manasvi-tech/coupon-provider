@@ -7,10 +7,16 @@ const AvailableCoupons = () => {
 
   const fetchCoupons = async () => {
     setLoading(true);
-    const data = await getAvailableCoupons();
-    setCoupons(data.availableCoupons || []);
+    try {
+      const data = await getAvailableCoupons();
+      console.log("📦 API Response:", data);  // ✅ Debug API Response
+      setCoupons(data.availableCoupons || []);
+    } catch (error) {
+      console.error("❌ Error fetching coupons:", error);
+    }
     setLoading(false);
   };
+  
 
   // ✅ Fetch coupons when the component mounts
   useEffect(() => {
