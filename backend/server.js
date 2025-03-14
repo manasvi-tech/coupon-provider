@@ -2,24 +2,29 @@ import express from "express"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import cors from "cors";
-import couponRoutes from "../routes/coupon.route.js"
+import couponRoutes from "./routes/coupon.route.js"
+import path from "path"
 
 dotenv.config();
-const PORT = 3000;
-const LOCAL_IP = "192.168.1.16";
+const PORT =  process.env.PORT || 3000;
 
 const app = express();
+const __dirname = path.resolve();
 
 
-import connectToMongo from "../db/connect.js";
-
+import connectToMongo from "./db/connect.js";
+const LOCAL_IP = "192.168.1.16"
 // Middleware
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:5173", credentials: true })); // Allows frontend requests on cookies
 
+app.use(express.static(path.join(__dirname,"/frontend/dist")))
 
+app.get("*", (req,res) =>{
+    res.sendFile(path.join(__dirname,"frontend" , "dist" , "index.html"))
+})
 
 app.use("/api/coupon",  couponRoutes);
 
@@ -29,7 +34,7 @@ app.get("/test", (req, res) => {
 
 
 connectToMongo().then(() => {
-    app.listen(PORT, LOCAL_IP, () => console.log(`Server running on http://${LOCAL_IP}:${PORT}`));
+    app.listen(PORT, () => console.log(`Server running on http://${LOCAL_IP}:${PORT}`));
 }).catch(err => {
     console.error("Database connection failed", err);
 });
