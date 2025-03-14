@@ -2,15 +2,16 @@ import express from "express"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import cors from "cors";
-import couponRoutes from "./routes/coupon.route.js";
+import couponRoutes from "../routes/coupon.route.js"
 
 dotenv.config();
 const PORT = 3000;
+const LOCAL_IP = "192.168.1.16";
 
 const app = express();
 
 
-import connectToMongo from "./db/connect.js";
+import connectToMongo from "../db/connect.js";
 
 // Middleware
 app.use(express.json())
@@ -28,9 +29,7 @@ app.get("/test", (req, res) => {
 
 
 connectToMongo().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Listening on port ${PORT}`);
-    });
+    app.listen(PORT, LOCAL_IP, () => console.log(`Server running on http://${LOCAL_IP}:${PORT}`));
 }).catch(err => {
     console.error("Database connection failed", err);
 });
