@@ -95,9 +95,15 @@ App will be available at: `http://localhost:3000`
 ---
 
 ## 🔮 Future Scope
-📌 **Admin Dashboard** – Add a UI for managing coupons  
-📌 **Coupon Expiry** – Add expiration times for unclaimed coupons  
-📌 **Analytics** – Track claim trends  
+📌 **Admin Dashboard** – A web-based UI for managing available coupons, viewing claim history, and monitoring abuse prevention logs.
+📌**Coupon Expiry** – Implement expiration times for unclaimed coupons, ensuring they do not stay inactive indefinitely.
+📌 **Personalized Offers** – Introduce dynamic coupon allocation based on user behavior or location data.
+📌 **Multi-User Support** – Allow multiple coupon categories, with different cooldown rules per category.
+📌 **Rate Limiting** – Introduce request throttling to prevent automated claim attempts from bots or scrapers.
+📌 **Blockchain-based Coupons** – Use blockchain to create tamper-proof, decentralized coupon verification.
+📌 **Two-Tiered Abuse Prevention** – Implement reCAPTCHA verification for users detected as suspicious based on claim frequency or IP history.
+📌 **Email Notifications** – Allow users to opt-in for new coupon availability alerts.
+📌 **Mobile App Integration** – Develop an API-friendly structure to allow future Android/iOS apps to connect.
 
 ---
 
@@ -114,4 +120,3 @@ App will be available at: `http://localhost:3000`
 
 ---
 
-🎯 **This README meets all assignment requirements and makes a strong submission! 🚀**
