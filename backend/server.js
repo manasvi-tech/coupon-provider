@@ -13,16 +13,18 @@ const __dirname = path.resolve();
 
 
 import connectToMongo from "./db/connect.js";
-const LOCAL_IP = "192.168.1.16"
+const LOCAL_IP = process.env.LOCAL_IP || "127.0.0.1"; // Use localhost for dev, 0.0.0.0 for cloud
 // Middleware
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+
 app.use(cors({ 
     origin: function (origin, callback) {
       const allowedOrigins = [
-        "http://localhost:5173",  // ✅ Allow local development
-        process.env.FRONTEND_URL  // ✅ Use environment variable for production frontend
+        "http://localhost:5173",  
+        "https://coupon-provider-8m3w.onrender.com",  // ✅ Explicit Render domain
+        process.env.FRONTEND_URL  
       ];
   
       if (!origin || allowedOrigins.includes(origin)) {
@@ -34,6 +36,7 @@ app.use(cors({
     },
     credentials: true
   }));
+  
   
   
 
@@ -52,8 +55,9 @@ app.get("/test", (req, res) => {
   });
 
 
-connectToMongo().then(() => {
-    app.listen(PORT, () => console.log(`Server running on http://${LOCAL_IP}:${PORT}`));
+  connectToMongo().then(() => {
+    app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 }).catch(err => {
-    console.error("Database connection failed", err);
+    console.error("❌ Database connection failed", err);
+    process.exit(1);  // Exit only in dev, handle better in production
 });

@@ -33,7 +33,13 @@
         await coupon.save();
     
         await Claim.create({ ip: userIP, timestamp: Date.now() });
-        res.cookie("coupon_claimed", "true", { httpOnly: true, maxAge: cooldownTime });
+        res.cookie("coupon_claimed", "true", { 
+          httpOnly: true, 
+          maxAge: cooldownTime, 
+          sameSite: "None",
+          secure: true
+        });
+        
     
         return res.json({ coupon: coupon.code });
     };
