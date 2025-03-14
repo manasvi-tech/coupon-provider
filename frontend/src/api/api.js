@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000";
+const API_BASE = "https://coupon-provider-8m3w.onrender.com";
 
 
 export const getAvailableCoupons = async () => {

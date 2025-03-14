@@ -19,12 +19,22 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({ 
-    origin: [
-      "http://localhost:5173",  // ✅ Allow local development
-      "http://192.168.1.16:3000" // ✅ Allow your local IP
-    ], 
-    credentials: true 
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:5173",  // ✅ Allow local development
+        process.env.FRONTEND_URL  // ✅ Use environment variable for production frontend
+      ];
+  
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.error(`❌ CORS BLOCKED: ${origin}`);
+        callback(new Error("CORS Not Allowed"));
+      }
+    },
+    credentials: true
   }));
+  
   
 
 // ✅ Fix: API routes should be defined BEFORE serving frontend files
