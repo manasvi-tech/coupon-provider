@@ -7,7 +7,7 @@ This is a live web application that distributes coupons to guest users **sequent
 ✔️ **Round-Robin Coupon Distribution** – Coupons are assigned in sequence  
 ✔️ **Guest Access** – Users don’t need an account to claim coupons  
 ✔️ **Abuse Prevention**  
-   - 🛑 **IP Tracking** – Restricts claims from the same IP for **2 minutes**  
+   - 🛑 **IP Tracking** – Restricts claims from the same IP for **30 minutes**  
    - 🍪 **Cookie Tracking** – Prevents users from claiming multiple coupons in the same session  
 ✔️ **User Feedback** – Displays messages about **success or cooldown**  
 ✔️ **Deployed on Render** – Live public URL provided  
@@ -29,7 +29,7 @@ This is a live web application that distributes coupons to guest users **sequent
 
 ### ✅ Clone the Repository
 ```bash
-git clone https://github.com/yourusername/coupon-app.git
+git clone https://github.com/manasvi-tech/coupon-provider.git
 cd coupon-app
 ```
 
